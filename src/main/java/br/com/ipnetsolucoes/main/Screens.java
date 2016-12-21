@@ -65,7 +65,9 @@ public class Screens {
 					// Recuperar os contatos do domínio
 					// Realizar as alterações necessárias
 					// Jogar as alterações no servidor
-
+					File file = new File(".");
+					for(String fileNames : file.list()) System.out.println(fileNames);
+					
 					JFrame fram3 = addCsvFrame(email);
 
 				}

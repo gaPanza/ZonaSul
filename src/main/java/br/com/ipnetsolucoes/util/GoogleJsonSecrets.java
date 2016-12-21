@@ -12,6 +12,8 @@ import java.io.InputStreamReader;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import com.google.api.client.util.IOUtils;
+
 public class GoogleJsonSecrets {
 	private String private_key_id;
 	private String client_email;
@@ -27,8 +29,8 @@ public class GoogleJsonSecrets {
 		if (classLoader == null) {
 			classLoader = Class.class.getClassLoader();
 		}
-
-		InputStream resourceAsStream = new FileInputStream("br/com/ipnetsolucoes/"+jsonPath);
+		File f = new File(jsonPath);
+		InputStream resourceAsStream = new FileInputStream(f);
 		BufferedReader br = new BufferedReader(new InputStreamReader(resourceAsStream));
 		StringBuilder sb = new StringBuilder();
 		String line;
@@ -49,7 +51,9 @@ public class GoogleJsonSecrets {
 		this.private_key = (String) objJson.get("private_key");
 		this.client_id = (String) objJson.get("client_id");
 		this.type = (String) objJson.get("type");
+		System.out.println(objJson.toJSONString());
 	}
+
 
 	@Override
 	public String toString() {
