@@ -12,7 +12,6 @@ import java.io.InputStreamReader;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import com.google.api.client.util.IOUtils;
 
 public class GoogleJsonSecrets {
 	private String private_key_id;

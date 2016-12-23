@@ -33,7 +33,7 @@ public class Screens {
 	private static JButton btnEntrar;
 	private static JFileChooser jfc = new JFileChooser();
 	private static JFrame frame;
-	static Logger log = Logger.getLogger(Main.class.getName());
+	static Logger log = Logger.getLogger(Screens.class.getName());
 
 	public static void main(String[] args) {
 		mainActivity();
