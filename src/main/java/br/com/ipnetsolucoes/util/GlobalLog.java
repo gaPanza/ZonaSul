@@ -72,7 +72,7 @@ public class GlobalLog {
 		return txtError;
 	}
 	
-	public static String getJarPath(Class classe) {
+	public static String getJarPath(@SuppressWarnings("rawtypes") Class classe) {
 		String path = "";
 		String decodedPath = "";
 		

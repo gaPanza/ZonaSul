@@ -1,35 +1,29 @@
 package br.com.ipnetsolucoes.main;
 
+
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.Properties;
+
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-
-import br.com.ipnetsolucoes.service.MainWindow;
 import br.com.ipnetsolucoes.beans.Retorno;
-import br.com.ipnetsolucoes.main.CsvParser;
+
 import br.com.ipnetsolucoes.util.*;
 import br.com.ipnetsolucoes.service.*;
 
 public class Screens {
-
-	private static JTextField textField;
 	private static JButton btnEntrar;
 	private static JFileChooser jfc = new JFileChooser();
 	private static JFrame frame;
@@ -45,39 +39,15 @@ public class Screens {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				frame.setVisible(false);
-
-				String email = textField.getText().trim();
-
-				if (!email.contains("@")) {
-					// Retorna a tela de inserção de email com o erro de
-					// inserção não @zonasul
-
-					log.log(Level.INFO, "Email não contém @ZonaSul " + email);
-					JOptionPane.showMessageDialog(null, "O email inserido não é um email @ZonaSul", "Erro de Domínio",
-							JOptionPane.ERROR_MESSAGE);
-					mainActivity();
-
-				} else {
-					// Autenticar o domínio via API
-
-					// Recuperar todos os contatos do email
-
-					// Recuperar os contatos do domínio
-					// Realizar as alterações necessárias
-					// Jogar as alterações no servidor
-					File file = new File(".");
-					for(String fileNames : file.list()) System.out.println(fileNames);
-					
-					JFrame fram3 = addCsvFrame(email);
-
-				}
-
+					addCsvFrame();
 			}
-		});
+				});
+
+	
 
 	}
 
-	public static JFrame addCsvFrame(String email) {
+	public static JFrame addCsvFrame() {
 		JFrame fram3 = new JFrame();
 		FileFilter filter = new FileNameExtensionFilter("CSV file", "csv");
 
@@ -108,7 +78,7 @@ public class Screens {
 				config.setObjeto(configuration);
 
 				ContatosService cs = new ContatosService();
-				cs.ProcessAtualization(config, email, file);
+				cs.ProcessAtualization(config, file);
 
 				System.out.println("Tudo ok");
 
@@ -127,29 +97,30 @@ public class Screens {
 
 	public static JFrame mainFrame() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 558, 363);
+		frame.setBounds(0, 0, 640, 480);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		textField.setBounds(57, 100, 328, 36);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
-
-		btnEntrar = new JButton("Entrar");
+		btnEntrar = new JButton("Atualizar Contatos");
 		btnEntrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		btnEntrar.setBounds(294, 210, 91, 29);
+		btnEntrar.setBounds(20, 250, 200, 30);
 		frame.getContentPane().add(btnEntrar);
 
-		JLabel lblEmail = new JLabel("Email");
-		lblEmail.setBounds(69, 66, 51, 23);
-		frame.getContentPane().add(lblEmail);
-
-		JLabel lblNewLabel = new JLabel("IPNET Logo");
-		lblNewLabel.setIcon(new ImageIcon(MainWindow.class.getResource("/br/com/ipnetsolucoes/a.png")));
-		lblNewLabel.setBounds(419, 53, 96, 100);
-		frame.getContentPane().add(lblNewLabel);
+		JLabel fundo = new JLabel("");
+		fundo.setIcon(new ImageIcon(Screens.class.getResource("/br/com/ipnetsolucoes/logo.jpg")));
+		fundo.setBounds(0, 0, 640, 480);
+		
+		JLabel logo = new JLabel("IPNET Logo");
+		ImageIcon icon = new ImageIcon(Screens.class.getResource("/br/com/ipnetsolucoes/logo.gif"));
+		icon.setImage(icon.getImage().getScaledInstance(icon.getIconWidth()/2, icon.getIconHeight()/2, 100));
+		logo.setIcon(icon);
+		logo.setBounds(40, 180, icon.getIconWidth(), icon.getIconHeight());
+		
+		fundo.add(logo);
+		
+		frame.getContentPane().add(fundo);
+		frame.setResizable(false);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 
 		return frame;
